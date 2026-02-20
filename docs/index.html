@@ -3,245 +3,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zynk — AI Infrastructure</title>
+<title>Zynk — Intelligent AI Infrastructure</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f9fafb;
+  --bg:#f8fafc;
   --card:#ffffff;
   --text:#0f172a;
   --muted:#64748b;
-  --border:#e5e7eb;
+  --border:#e2e8f0;
   --primary:#111827;
   --accent:#2563eb;
-  --radius:18px;
+  --radius:20px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
-
+body{background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
 .container{max-width:1200px;margin:auto;padding:0 24px;}
 
-/* ===== NAVBAR ===== */
+/* NAVBAR */
 .navbar{
-  position:fixed;
-  top:0;
-  width:100%;
+  position:fixed;top:0;width:100%;
   backdrop-filter:blur(14px);
-  background:rgba(255,255,255,0.75);
+  background:rgba(255,255,255,0.8);
   border-bottom:1px solid var(--border);
   z-index:1000;
 }
-.nav-inner{
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:700;
-  font-size:18px;
-}
-.logo img{height:28px;}
+.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:14px;font-size:22px;font-weight:800;letter-spacing:1px;}
+.logo img{height:42px;}
 
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:28px;
-}
-.nav-links a{
-  text-decoration:none;
-  color:var(--muted);
-  font-size:14px;
-  font-weight:500;
-  transition:0.2s;
-}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;transition:0.2s;}
 .nav-links a:hover{color:var(--text);}
 
 .btn-primary{
-  padding:10px 20px;
-  border-radius:999px;
+  padding:11px 22px;border-radius:999px;
   background:linear-gradient(135deg,#111827,#1f2937);
-  color:white;
-  border:none;
-  cursor:pointer;
-  font-size:14px;
-  font-weight:600;
+  color:white;border:none;cursor:pointer;font-weight:600;
   transition:0.25s;
 }
-.btn-primary:hover{
-  transform:translateY(-2px);
-  box-shadow:0 12px 30px rgba(0,0,0,0.15);
-}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,0.15);}
 .btn-outline{
-  padding:9px 18px;
-  border-radius:999px;
+  padding:10px 20px;border-radius:999px;
   border:1px solid var(--border);
-  background:white;
-  cursor:pointer;
-  font-weight:500;
+  background:white;font-weight:500;
 }
 
-/* ===== HERO ===== */
-.hero{
-  padding-top:170px;
-  padding-bottom:130px;
-  text-align:center;
-}
-.hero h1{
-  font-size:56px;
-  font-weight:800;
-  letter-spacing:-1px;
-}
-.cursor{
-  display:inline-block;
-  width:3px;
-  background:var(--text);
-  margin-left:5px;
-  animation:blink 1s infinite;
-}
-@keyframes blink{
-  0%,50%,100%{opacity:1}
-  25%,75%{opacity:0}
-}
-.hero p{
-  margin-top:24px;
-  font-size:19px;
-  color:var(--muted);
-  max-width:700px;
-  margin-left:auto;
-  margin-right:auto;
-}
-.hero-buttons{
-  margin-top:40px;
+/* HERO */
+.hero{padding-top:180px;padding-bottom:140px;text-align:center;}
+.hero h1{font-size:60px;font-weight:800;letter-spacing:-1px;max-width:900px;margin:auto;}
+.subtitle{margin-top:26px;font-size:20px;color:var(--muted);min-height:30px;}
+.cursor{display:inline-block;width:3px;background:var(--text);margin-left:4px;animation:blink 1s infinite;}
+@keyframes blink{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
+
+.hero-buttons{margin-top:50px;display:flex;justify-content:center;gap:20px;}
+
+/* ROUTING FLOW DIAGRAM */
+.flow-diagram{
+  margin-top:100px;
   display:flex;
   justify-content:center;
-  gap:16px;
+  align-items:center;
+  gap:40px;
+  font-weight:600;
 }
-.mock{
-  margin-top:80px;
+.node{
   background:var(--card);
   border:1px solid var(--border);
+  padding:20px 30px;
   border-radius:var(--radius);
-  padding:35px;
-  box-shadow:0 25px 70px rgba(0,0,0,0.05);
-  max-width:950px;
-  margin:auto;
-  text-align:left;
-  font-family:monospace;
-  color:#1e293b;
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+  transition:0.3s;
 }
+.node.active{
+  border-color:var(--accent);
+  box-shadow:0 0 20px rgba(37,99,235,0.2);
+}
+.arrow{font-size:26px;color:var(--muted);}
 
-/* ===== SECTIONS ===== */
-.section{padding:110px 0;}
-.section h2{font-size:36px;margin-bottom:18px;}
-.section p{color:var(--muted);max-width:700px;}
+/* SECTIONS */
+.section{padding:130px 0;}
+.section h2{font-size:38px;margin-bottom:20px;}
+.section p{color:var(--muted);max-width:750px;}
 
 .grid{
-  margin-top:60px;
+  margin-top:70px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
+  gap:35px;
 }
 .card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:30px;
+  padding:35px;
   transition:0.3s;
 }
 .card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.06);
+  transform:translateY(-8px);
+  box-shadow:0 25px 60px rgba(15,23,42,0.08);
 }
 
-/* ===== PRICING ===== */
-.pricing{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:30px;
-  margin-top:60px;
-}
+/* PRICING */
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:35px;margin-top:80px;}
 .price-card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:40px;
+  padding:50px;
   text-align:center;
-}
-.price{font-size:40px;margin:20px 0;font-weight:700;}
-
-/* ===== MODAL ===== */
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,0.4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  visibility:hidden;
-  opacity:0;
   transition:0.3s;
 }
+.price-card:hover{transform:translateY(-8px);box-shadow:0 25px 70px rgba(0,0,0,0.08);}
+.price{font-size:44px;margin:25px 0;font-weight:800;}
+.highlight{border:2px solid var(--accent);}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(15,23,42,0.4);
+  display:flex;align-items:center;justify-content:center;
+  visibility:hidden;opacity:0;transition:0.3s;
+}
 .modal{
-  background:white;
-  padding:40px;
-  border-radius:20px;
-  width:400px;
-  position:relative;
+  background:white;padding:45px;border-radius:20px;width:420px;
   box-shadow:0 40px 80px rgba(0,0,0,0.15);
 }
 .modal-overlay.active{visibility:visible;opacity:1;}
-.modal input{
-  width:100%;
-  padding:12px;
-  margin-top:14px;
-  border:1px solid var(--border);
-  border-radius:10px;
-}
-.modal button{margin-top:20px;width:100%;}
-.close-btn{
-  position:absolute;
-  top:15px;
-  right:18px;
-  cursor:pointer;
-}
-.loading{
-  width:18px;
-  height:18px;
-  border:3px solid #ccc;
-  border-top:3px solid #111;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:auto;
-}
-@keyframes spin{
-  to{transform:rotate(360deg);}
-}
+.modal input{width:100%;padding:14px;margin-top:14px;border:1px solid var(--border);border-radius:12px;}
+.modal button{margin-top:24px;width:100%;}
 
-/* ===== FOOTER ===== */
-footer{
-  padding:60px 0;
-  border-top:1px solid var(--border);
-  text-align:center;
-  color:var(--muted);
-}
+footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color:var(--muted);}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
   <div class="container nav-inner">
     <div class="logo">
-      <img src="assets/logo.svg" alt="Zynk Logo">
+      <img src="assets/logo.svg">
       ZYNK
     </div>
     <div class="nav-links">
@@ -254,42 +158,91 @@ footer{
   </div>
 </div>
 
-<!-- HERO -->
 <section class="hero container">
-  <h1 id="typing"></h1><span class="cursor"></span>
-  <p>
-    Zynk analyzes complexity, routes intelligently,
-    manages cost and context automatically.
-  </p>
+  <h1>AI Infrastructure That Thinks Before It Responds</h1>
+  <div class="subtitle" id="typing"></div><span class="cursor"></span>
+
   <div class="hero-buttons">
     <button class="btn-primary" onclick="openModal('signup')">Start Free</button>
     <button class="btn-outline">View Architecture</button>
   </div>
 
-  <div class="mock" id="preview">
-Routing request...
-Analyzing complexity...
-Selecting optimal model...
-Streaming response...
+  <div class="flow-diagram">
+    <div class="node" id="n1">User Query</div>
+    <div class="arrow">→</div>
+    <div class="node" id="n2">Analysis Engine</div>
+    <div class="arrow">→</div>
+    <div class="node" id="n3">Optimal Model</div>
+    <div class="arrow">→</div>
+    <div class="node" id="n4">Streaming Response</div>
   </div>
 </section>
 
 <section id="product" class="section container">
-  <h2>Smart Routing Layer</h2>
-  <p>Intent detection, plan-based routing, compression and cost enforcement.</p>
+  <h2>Intelligent Model Orchestration</h2>
+  <p>
+    Zynk is not another AI wrapper. It is an orchestration layer that analyzes,
+    routes and optimizes every request before execution.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Intent Detection</h3>
+      <p>Each query is analyzed for reasoning depth, code complexity and token requirements.</p>
+    </div>
+    <div class="card">
+      <h3>Plan-Aware Routing</h3>
+      <p>User tier directly influences model selection logic and resource allocation.</p>
+    </div>
+    <div class="card">
+      <h3>Context Compression</h3>
+      <p>Long conversations are summarized intelligently to preserve reasoning continuity.</p>
+    </div>
+  </div>
 </section>
 
 <section id="architecture" class="section container">
-  <h2>Architecture</h2>
-  <p>FastAPI backend, Supabase RLS, model orchestration, streaming engine.</p>
+  <h2>Production Architecture</h2>
+  <p>
+    Built with FastAPI streaming backend, Supabase RLS security,
+    cost enforcement systems, rate limiting layers and structured logging.
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Secure Isolation</h3>
+      <p>Row-level security ensures no user can access another’s conversation.</p>
+    </div>
+    <div class="card">
+      <h3>Streaming Engine</h3>
+      <p>Token-level streaming delivers smooth real-time responses.</p>
+    </div>
+    <div class="card">
+      <h3>Cost Enforcement</h3>
+      <p>Daily plan caps and global platform budget protection built-in.</p>
+    </div>
+  </div>
 </section>
 
 <section id="pricing" class="section container">
   <h2>Pricing</h2>
+
   <div class="pricing">
-    <div class="price-card"><h3>Free</h3><div class="price">$0</div></div>
-    <div class="price-card"><h3>Pro</h3><div class="price">$19</div></div>
-    <div class="price-card"><h3>Ultra</h3><div class="price">$49</div></div>
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">$0</div>
+      <p>Basic routing access</p>
+    </div>
+    <div class="price-card highlight">
+      <h3>Pro</h3>
+      <div class="price">$19</div>
+      <p>Advanced orchestration & priority routing</p>
+    </div>
+    <div class="price-card">
+      <h3>Ultra</h3>
+      <div class="price">$49</div>
+      <p>Long context models & premium throughput</p>
+    </div>
   </div>
 </section>
 
@@ -297,92 +250,39 @@ Streaming response...
 © 2026 Zynk AI — Infrastructure for serious builders.
 </footer>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="close-btn" onclick="closeModal()">✕</div>
-    <h3 id="modalTitle"></h3>
-    <input type="text" placeholder="Name" id="nameField">
-    <input type="email" placeholder="Email" id="emailField">
-    <input type="password" placeholder="Password" id="passField">
-    <button class="btn-primary" id="actionBtn">Continue</button>
-  </div>
-</div>
-
 <script>
-const backend="https://dev-router.onrender.com";
-const typingText="AI Infrastructure That Thinks Before It Responds";
-let i=0;
-function typeEffect(){
-  if(i<typingText.length){
-    document.getElementById("typing").innerHTML+=typingText.charAt(i);
-    i++;
-    setTimeout(typeEffect,40);
-  }
-}
-typeEffect();
-
-const modal=document.getElementById("modal");
-const title=document.getElementById("modalTitle");
-const nameField=document.getElementById("nameField");
-const actionBtn=document.getElementById("actionBtn");
-
-let mode="login";
-
-function openModal(type){
-  modal.classList.add("active");
-  mode=type;
-  if(type==="login"){
-    title.innerText="Login";
-    nameField.style.display="none";
+/* Typing subtitle */
+const lines=[
+  "Smart routing based on complexity.",
+  "Plan-aware model orchestration.",
+  "Cost enforcement and streaming control."
+];
+let lineIndex=0,charIndex=0;
+function type(){
+  if(charIndex<lines[lineIndex].length){
+    document.getElementById("typing").innerText+=lines[lineIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(type,35);
   }else{
-    title.innerText="Create Account";
-    nameField.style.display="block";
+    setTimeout(()=>{
+      document.getElementById("typing").innerText="";
+      charIndex=0;
+      lineIndex=(lineIndex+1)%lines.length;
+      type();
+    },2000);
   }
 }
+type();
 
-function closeModal(){
-  modal.classList.remove("active");
+/* Routing flow animation */
+const nodes=["n1","n2","n3","n4"];
+let current=0;
+function animateFlow(){
+  nodes.forEach(id=>document.getElementById(id).classList.remove("active"));
+  document.getElementById(nodes[current]).classList.add("active");
+  current=(current+1)%nodes.length;
 }
-
-window.onclick=function(e){
-  if(e.target===modal) closeModal();
-}
-
-actionBtn.onclick=async function(){
-  actionBtn.innerHTML='<div class="loading"></div>';
-  const email=document.getElementById("emailField").value;
-  const password=document.getElementById("passField").value;
-  const name=document.getElementById("nameField").value;
-
-  const endpoint=mode==="login"?"login":"signup";
-
-  const body=mode==="login"?
-    {email,password}:
-    {name,email,password};
-
-  const res=await fetch(`${backend}/${endpoint}`,{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(body)
-  });
-
-  const data=await res.json();
-
-  if(res.ok){
-    if(mode==="login"){
-      localStorage.setItem("token",data.access_token);
-      window.location="chat.html";
-    }else{
-      alert("Account created successfully");
-      closeModal();
-    }
-  }else{
-    alert(data.detail||"Error");
-  }
-
-  actionBtn.innerText="Continue";
-}
+setInterval(animateFlow,1200);
 </script>
 
 </body>
