@@ -353,11 +353,10 @@ footer{
   <div class="grid">
 
     <div class="card">
-      <h3>1. API Gateway Layer</h3>
+      <h3>1. Controlled Entry Layer</h3>
       <p>
-        All user requests enter through a FastAPI streaming gateway.
-        Authentication, rate limiting and plan validation are enforced
-        before routing begins.
+        Zynk does not send requests directly to models.
+        Each query is first examined, validated and aligned with user entitlements before processing continues.
       </p>
     </div>
 
