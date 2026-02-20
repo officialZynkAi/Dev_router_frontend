@@ -14,6 +14,7 @@
   --muted:#64748b;
   --border:#e2e8f0;
   --accent:#2563eb;
+  --dark:#111827;
   --radius:18px;
 }
 
@@ -25,7 +26,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* Background grid */
+/* Animated Grid */
 body::before{
   content:"";
   position:fixed;
@@ -71,7 +72,7 @@ body::before{
   align-items:center;
   gap:14px;
   font-size:20px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:0.5px;
 }
 
@@ -99,7 +100,7 @@ body::before{
 .btn-primary{
   padding:10px 22px;
   border-radius:999px;
-  background:#111827;
+  background:var(--dark);
   color:white;
   border:none;
   font-weight:600;
@@ -123,32 +124,32 @@ body::before{
 
 /* HERO */
 .hero{
-  padding-top:190px;
-  padding-bottom:140px;
+  padding-top:200px;
+  padding-bottom:160px;
   text-align:center;
 }
 
 .hero h1{
-  font-size:56px;
+  font-size:60px;
   font-weight:800;
   letter-spacing:-1px;
-  max-width:880px;
+  max-width:900px;
   margin:auto;
   animation:fadeUp 1s ease forwards;
 }
 
 .hero p{
-  margin-top:26px;
+  margin-top:28px;
   font-size:20px;
   color:var(--muted);
-  max-width:750px;
+  max-width:760px;
   margin-left:auto;
   margin-right:auto;
   animation:fadeUp 1.3s ease forwards;
 }
 
 .hero-buttons{
-  margin-top:48px;
+  margin-top:50px;
   display:flex;
   justify-content:center;
   gap:18px;
@@ -162,17 +163,18 @@ body::before{
 
 /* SECTION */
 .section{
-  padding:110px 0;
+  padding:120px 0;
 }
 
 .section h2{
-  font-size:36px;
+  font-size:40px;
   margin-bottom:18px;
 }
 
 .section p{
   color:var(--muted);
-  max-width:720px;
+  max-width:780px;
+  font-size:17px;
 }
 
 .grid{
@@ -186,13 +188,35 @@ body::before{
   background:white;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:34px;
+  padding:38px;
   transition:0.3s;
 }
 
 .card:hover{
   transform:translateY(-8px);
   box-shadow:0 25px 60px rgba(15,23,42,0.08);
+}
+
+/* PRICING */
+.pricing{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+  margin-top:60px;
+}
+
+.price-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:45px;
+  text-align:center;
+}
+
+.price{
+  font-size:42px;
+  margin:20px 0;
+  font-weight:800;
 }
 
 /* MODAL */
@@ -250,7 +274,7 @@ body::before{
 }
 
 footer{
-  padding:70px 0;
+  padding:80px 0;
   border-top:1px solid var(--border);
   text-align:center;
   color:var(--muted);
@@ -267,6 +291,7 @@ footer{
       ZYNK
     </div>
     <div class="nav-links">
+      <a href="#problem">Problem</a>
       <a href="#solution">Solution</a>
       <a href="#architecture">Architecture</a>
       <a href="#pricing">Pricing</a>
@@ -277,41 +302,81 @@ footer{
 </div>
 
 <section class="hero container">
-  <h1>The Orchestration Layer for Modern AI Applications..</h1>
-  <p>Zynk automatically routes every query to the most cost-efficient model — so you get the best answer without burning your budget.</p>
+  <h1>Stop Overpaying for AI Infrastructure.</h1>
+  <p>
+    Zynk intelligently routes every query to the most cost-efficient model across providers —
+    automatically balancing intelligence, latency and cost.
+  </p>
   <div class="hero-buttons">
     <button class="btn-primary" onclick="openModal('signup')">Start Free</button>
     <button class="btn-outline">View Architecture</button>
   </div>
 </section>
 
+<section id="problem" class="section container">
+  <h2>The AI Cost Problem</h2>
+  <p>
+    Developers unknowingly burn premium tokens on simple tasks.
+    Large reasoning models are used where lightweight models would perform equally well —
+    increasing infrastructure costs dramatically.
+  </p>
+</section>
+
 <section id="solution" class="section container">
   <h2>Intelligent Model Orchestration</h2>
-  <p>Zynk analyzes query complexity, code presence and context length — then selects the optimal AI model automatically.</p>
+  <p>
+    Zynk analyzes complexity, context length and code presence,
+    then routes the request to the optimal model tier.
+  </p>
   <div class="grid">
-    <div class="card"><h3>Automatic Routing</h3><p>No manual switching.</p></div>
-    <div class="card"><h3>Cost Guard</h3><p>Prevents budget overflow.</p></div>
-    <div class="card"><h3>Context Compression</h3><p>Maintains reasoning efficiency.</p></div>
+    <div class="card">
+      <h3>Automatic Routing</h3>
+      <p>No manual switching between models.</p>
+    </div>
+    <div class="card">
+      <h3>Cost Guard</h3>
+      <p>Daily plan caps and platform safeguards.</p>
+    </div>
+    <div class="card">
+      <h3>Context Compression</h3>
+      <p>Maintains reasoning while reducing token usage.</p>
+    </div>
   </div>
 </section>
 
 <section id="architecture" class="section container">
   <h2>Production Architecture</h2>
-  <p>FastAPI streaming backend, Supabase security, cost enforcement and routing engine.</p>
+  <p>
+    FastAPI streaming backend, Supabase RLS security,
+    rate limiting, cost enforcement and dynamic routing logic.
+  </p>
 </section>
 
 <section id="pricing" class="section container">
   <h2>Pricing</h2>
-  <div class="grid">
-    <div class="card"><h3>Free</h3><p>$0 — Basic routing</p></div>
-    <div class="card"><h3>Pro</h3><p>$19 — Advanced reasoning</p></div>
-    <div class="card"><h3>Ultra</h3><p>$49 — Long context models</p></div>
+  <div class="pricing">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">$0</div>
+      <p>Basic routing & experimentation</p>
+    </div>
+    <div class="price-card">
+      <h3>Pro</h3>
+      <div class="price">$19</div>
+      <p>Advanced reasoning & priority routing</p>
+    </div>
+    <div class="price-card">
+      <h3>Ultra</h3>
+      <div class="price">$49</div>
+      <p>Long context models & premium throughput</p>
+    </div>
   </div>
 </section>
 
-<footer>© 2026 Zynk AI</footer>
+<footer>
+© 2026 Zynk AI — Intelligent Infrastructure Layer
+</footer>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h3 id="modalTitle"></h3>
