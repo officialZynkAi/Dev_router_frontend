@@ -3,20 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zynk — Intelligent AI Infrastructure</title>
+<title>Zynk — Intelligent AI Orchestration</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#f8fafc;
-  --card:#ffffff;
   --text:#0f172a;
   --muted:#64748b;
   --border:#e2e8f0;
-  --primary:#111827;
   --accent:#2563eb;
-  --radius:20px;
+  --radius:18px;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
@@ -24,11 +22,10 @@ html{scroll-behavior:smooth;}
 body{
   background:var(--bg);
   color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* Animated Grid */
+/* Background grid */
 body::before{
   content:"";
   position:fixed;
@@ -36,136 +33,228 @@ body::before{
   background-image:
     linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
-  animation:gridMove 40s linear infinite;
+  background-size:70px 70px;
+  animation:gridMove 60s linear infinite;
   z-index:-1;
 }
 @keyframes gridMove{
   from{transform:translateY(0)}
-  to{transform:translateY(60px)}
+  to{transform:translateY(70px)}
 }
 
-.container{max-width:1200px;margin:auto;padding:0 24px;}
+.container{
+  max-width:1180px;
+  margin:auto;
+  padding:0 24px;
+}
 
 /* NAVBAR */
 .navbar{
-  position:fixed;top:0;width:100%;
+  position:fixed;
+  top:0;
+  width:100%;
   backdrop-filter:blur(14px);
-  background:rgba(255,255,255,0.8);
+  background:rgba(255,255,255,0.85);
   border-bottom:1px solid var(--border);
   z-index:1000;
 }
-.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:14px;font-size:22px;font-weight:800;}
-.logo img{height:44px;}
 
-.nav-links{display:flex;align-items:center;gap:32px;}
-.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;}
+.nav-inner{
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+
+.logo img{
+  height:48px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:500;
+  transition:0.2s;
+}
+
+.nav-links a:hover{
+  color:var(--text);
+}
 
 .btn-primary{
-  padding:11px 22px;border-radius:999px;
-  background:linear-gradient(135deg,#111827,#1f2937);
-  color:white;border:none;cursor:pointer;font-weight:600;
-}
-.btn-outline{
-  padding:10px 20px;border-radius:999px;
-  border:1px solid var(--border);
-  background:white;font-weight:500;
-}
-
-/* SIDEBAR */
-.menu-btn{display:none;font-size:24px;cursor:pointer;}
-.sidebar{
-  position:fixed;
-  right:-320px;
-  top:0;
-  width:300px;
-  height:100%;
-  background:white;
-  box-shadow:-10px 0 40px rgba(0,0,0,0.1);
-  padding:40px;
-  transition:0.3s;
-  z-index:2000;
-}
-.sidebar.open{right:0;}
-.sidebar .close-btn{
-  text-align:right;
-  font-size:22px;
+  padding:10px 22px;
+  border-radius:999px;
+  background:#111827;
+  color:white;
+  border:none;
+  font-weight:600;
   cursor:pointer;
-  margin-bottom:30px;
-}
-.sidebar a{
-  display:block;
-  margin-bottom:20px;
-  text-decoration:none;
-  color:var(--text);
-  font-weight:500;
+  transition:0.25s;
 }
 
-@media(max-width:900px){
-  .nav-links{display:none;}
-  .menu-btn{display:block;}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 35px rgba(0,0,0,0.15);
+}
+
+.btn-outline{
+  padding:9px 20px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:white;
+  font-weight:500;
+  cursor:pointer;
 }
 
 /* HERO */
-.hero{padding-top:180px;padding-bottom:140px;text-align:center;}
-.hero h1{font-size:60px;font-weight:800;max-width:900px;margin:auto;}
-.subtitle{margin-top:26px;font-size:20px;color:var(--muted);min-height:30px;}
-.cursor{display:inline-block;width:3px;background:var(--text);margin-left:4px;animation:blink 1s infinite;}
-@keyframes blink{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
+.hero{
+  padding-top:190px;
+  padding-bottom:140px;
+  text-align:center;
+}
 
-.hero-buttons{margin-top:50px;display:flex;justify-content:center;gap:20px;}
+.hero h1{
+  font-size:56px;
+  font-weight:800;
+  letter-spacing:-1px;
+  max-width:880px;
+  margin:auto;
+  animation:fadeUp 1s ease forwards;
+}
 
-.section{padding:130px 0;}
-.section h2{font-size:38px;margin-bottom:20px;}
-.section p{color:var(--muted);max-width:750px;}
+.hero p{
+  margin-top:26px;
+  font-size:20px;
+  color:var(--muted);
+  max-width:750px;
+  margin-left:auto;
+  margin-right:auto;
+  animation:fadeUp 1.3s ease forwards;
+}
 
-.grid{margin-top:70px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:35px;}
+.hero-buttons{
+  margin-top:48px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  animation:fadeUp 1.6s ease forwards;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* SECTION */
+.section{
+  padding:110px 0;
+}
+
+.section h2{
+  font-size:36px;
+  margin-bottom:18px;
+}
+
+.section p{
+  color:var(--muted);
+  max-width:720px;
+}
+
+.grid{
+  margin-top:60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
 .card{
   background:white;
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:35px;
+  padding:34px;
   transition:0.3s;
 }
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.08);
-}
 
-/* PRICING */
-.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:35px;margin-top:80px;}
-.price-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:50px;
-  text-align:center;
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 25px 60px rgba(15,23,42,0.08);
 }
-.highlight{border:2px solid var(--accent);}
 
 /* MODAL */
 .modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.5);
-  display:flex;align-items:center;justify-content:center;
-  visibility:hidden;opacity:0;transition:0.3s;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  visibility:hidden;
+  opacity:0;
+  transition:0.3s;
+  z-index:2000;
 }
-.modal-overlay.active{visibility:visible;opacity:1;}
+
+.modal-overlay.active{
+  visibility:visible;
+  opacity:1;
+}
+
 .modal{
-  background:white;padding:40px;border-radius:20px;width:400px;
+  background:white;
+  width:420px;
+  padding:40px;
+  border-radius:20px;
 }
+
 .modal input{
-  width:100%;padding:14px;margin-top:14px;border:1px solid var(--border);border-radius:12px;
+  width:100%;
+  padding:14px;
+  margin-top:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
 }
+
 .loading{
-  width:18px;height:18px;border:3px solid #ddd;border-top:3px solid #111;border-radius:50%;
-  animation:spin 1s linear infinite;margin:auto;
+  width:18px;
+  height:18px;
+  border:3px solid #ddd;
+  border-top:3px solid #111;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
 
-.success{color:green;margin-top:10px;text-align:center;}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
 
-footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color:var(--muted);}
+.success{
+  margin-top:14px;
+  text-align:center;
+  font-size:14px;
+}
+
+footer{
+  padding:70px 0;
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+}
 </style>
 </head>
 
@@ -174,14 +263,12 @@ footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color
 <div class="navbar">
   <div class="container nav-inner">
     <div class="logo">
-      <img src="assets/logo.svg">
+      <img src="assets/logo.svg" alt="Zynk">
       ZYNK
     </div>
-    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
     <div class="nav-links">
-      <a href="#product">Product</a>
+      <a href="#solution">Solution</a>
       <a href="#architecture">Architecture</a>
-      <a href="#why">Why Zynk</a>
       <a href="#pricing">Pricing</a>
       <button class="btn-outline" onclick="openModal('login')">Login</button>
       <button class="btn-primary" onclick="openModal('signup')">Get Started</button>
@@ -189,58 +276,36 @@ footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color
   </div>
 </div>
 
-<div class="sidebar" id="sidebar">
-  <div class="close-btn" onclick="toggleSidebar()">✕</div>
-  <a href="#product">Product</a>
-  <a href="#architecture">Architecture</a>
-  <a href="#why">Why Zynk</a>
-  <a href="#pricing">Pricing</a>
-  <a href="#" onclick="openModal('login')">Login</a>
-  <a href="#" onclick="openModal('signup')">Sign Up</a>
-</div>
-
 <section class="hero container">
-  <h1>AI Infrastructure That Thinks Before It Responds</h1>
-  <div class="subtitle" id="typing"></div><span class="cursor"></span>
+  <h1>The Orchestration Layer for Modern AI Applications..</h1>
+  <p>Zynk automatically routes every query to the most cost-efficient model — so you get the best answer without burning your budget.</p>
   <div class="hero-buttons">
     <button class="btn-primary" onclick="openModal('signup')">Start Free</button>
+    <button class="btn-outline">View Architecture</button>
   </div>
 </section>
 
-<section id="product" class="section container">
+<section id="solution" class="section container">
   <h2>Intelligent Model Orchestration</h2>
-  <p>Zynk analyzes, routes and optimizes every query before execution.</p>
+  <p>Zynk analyzes query complexity, code presence and context length — then selects the optimal AI model automatically.</p>
+  <div class="grid">
+    <div class="card"><h3>Automatic Routing</h3><p>No manual switching.</p></div>
+    <div class="card"><h3>Cost Guard</h3><p>Prevents budget overflow.</p></div>
+    <div class="card"><h3>Context Compression</h3><p>Maintains reasoning efficiency.</p></div>
+  </div>
 </section>
 
 <section id="architecture" class="section container">
   <h2>Production Architecture</h2>
-  <p>Streaming FastAPI backend, Supabase RLS security, rate limiting & cost enforcement.</p>
-</section>
-
-<section id="why" class="section container">
-  <h2>Why Zynk</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Smart Cost Control</h3>
-      <p>Automatic plan-based cost enforcement.</p>
-    </div>
-    <div class="card">
-      <h3>Secure by Default</h3>
-      <p>Row level security ensures data isolation.</p>
-    </div>
-    <div class="card">
-      <h3>Built for Builders</h3>
-      <p>Designed for developers who want control.</p>
-    </div>
-  </div>
+  <p>FastAPI streaming backend, Supabase security, cost enforcement and routing engine.</p>
 </section>
 
 <section id="pricing" class="section container">
   <h2>Pricing</h2>
-  <div class="pricing">
-    <div class="price-card"><h3>Free</h3><p>$0</p></div>
-    <div class="price-card highlight"><h3>Pro</h3><p>$19</p></div>
-    <div class="price-card"><h3>Ultra</h3><p>$49</p></div>
+  <div class="grid">
+    <div class="card"><h3>Free</h3><p>$0 — Basic routing</p></div>
+    <div class="card"><h3>Pro</h3><p>$19 — Advanced reasoning</p></div>
+    <div class="card"><h3>Ultra</h3><p>$49 — Long context models</p></div>
   </div>
 </section>
 
@@ -254,21 +319,17 @@ footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color
     <input id="emailField" placeholder="Email">
     <input id="passField" type="password" placeholder="Password">
     <button class="btn-primary" id="actionBtn">Continue</button>
-    <div class="success" id="successMsg"></div>
+    <div class="success" id="msg"></div>
   </div>
 </div>
 
 <script>
-const backend="https://dev-router.onrender.com";
-
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("open");
-}
+const BACKEND_URL="https://dev-router.onrender.com";
 
 function openModal(mode){
   const modal=document.getElementById("modal");
   modal.classList.add("active");
-  document.getElementById("successMsg").innerText="";
+  document.getElementById("msg").innerText="";
   document.getElementById("modalTitle").innerText=mode==="login"?"Login":"Create Account";
   document.getElementById("nameField").style.display=mode==="signup"?"block":"none";
 
@@ -283,7 +344,7 @@ function openModal(mode){
     const endpoint=mode==="login"?"login":"signup";
     const body=mode==="login"?{email,password}:{name,email,password};
 
-    const res=await fetch(`${backend}/${endpoint}`,{
+    const res=await fetch(`${BACKEND_URL}/${endpoint}`,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(body)
@@ -297,10 +358,10 @@ function openModal(mode){
         localStorage.setItem("token",data.access_token);
         window.location="chat.html";
       }else{
-        document.getElementById("successMsg").innerText="Account created successfully!";
+        document.getElementById("msg").innerText="Account created successfully.";
       }
     }else{
-      document.getElementById("successMsg").innerText=data.detail||"Error";
+      document.getElementById("msg").innerText=data.detail||"Error occurred.";
     }
   };
 }
@@ -310,24 +371,6 @@ document.getElementById("modal").addEventListener("click",e=>{
     document.getElementById("modal").classList.remove("active");
   }
 });
-
-/* typing animation */
-const lines=["Smart routing.","Cost enforcement.","Secure AI infra."];
-let lineIndex=0,charIndex=0;
-function type(){
-  if(charIndex<lines[lineIndex].length){
-    document.getElementById("typing").innerText+=lines[lineIndex][charIndex++];
-    setTimeout(type,35);
-  }else{
-    setTimeout(()=>{
-      document.getElementById("typing").innerText="";
-      charIndex=0;
-      lineIndex=(lineIndex+1)%lines.length;
-      type();
-    },2000);
-  }
-}
-type();
 </script>
 
 </body>
