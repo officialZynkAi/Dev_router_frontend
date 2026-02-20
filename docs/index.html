@@ -21,7 +21,30 @@
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* Animated Grid */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridMove 40s linear infinite;
+  z-index:-1;
+}
+@keyframes gridMove{
+  from{transform:translateY(0)}
+  to{transform:translateY(60px)}
+}
+
 .container{max-width:1200px;margin:auto;padding:0 24px;}
 
 /* NAVBAR */
@@ -33,108 +56,114 @@ body{background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothi
   z-index:1000;
 }
 .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:14px;font-size:22px;font-weight:800;letter-spacing:1px;}
-.logo img{height:42px;}
+.logo{display:flex;align-items:center;gap:14px;font-size:22px;font-weight:800;}
+.logo img{height:44px;}
 
 .nav-links{display:flex;align-items:center;gap:32px;}
-.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;transition:0.2s;}
-.nav-links a:hover{color:var(--text);}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;}
 
 .btn-primary{
   padding:11px 22px;border-radius:999px;
   background:linear-gradient(135deg,#111827,#1f2937);
   color:white;border:none;cursor:pointer;font-weight:600;
-  transition:0.25s;
 }
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,0.15);}
 .btn-outline{
   padding:10px 20px;border-radius:999px;
   border:1px solid var(--border);
   background:white;font-weight:500;
 }
 
+/* SIDEBAR */
+.menu-btn{display:none;font-size:24px;cursor:pointer;}
+.sidebar{
+  position:fixed;
+  right:-320px;
+  top:0;
+  width:300px;
+  height:100%;
+  background:white;
+  box-shadow:-10px 0 40px rgba(0,0,0,0.1);
+  padding:40px;
+  transition:0.3s;
+  z-index:2000;
+}
+.sidebar.open{right:0;}
+.sidebar .close-btn{
+  text-align:right;
+  font-size:22px;
+  cursor:pointer;
+  margin-bottom:30px;
+}
+.sidebar a{
+  display:block;
+  margin-bottom:20px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:500;
+}
+
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .menu-btn{display:block;}
+}
+
 /* HERO */
 .hero{padding-top:180px;padding-bottom:140px;text-align:center;}
-.hero h1{font-size:60px;font-weight:800;letter-spacing:-1px;max-width:900px;margin:auto;}
+.hero h1{font-size:60px;font-weight:800;max-width:900px;margin:auto;}
 .subtitle{margin-top:26px;font-size:20px;color:var(--muted);min-height:30px;}
 .cursor{display:inline-block;width:3px;background:var(--text);margin-left:4px;animation:blink 1s infinite;}
 @keyframes blink{0%,50%,100%{opacity:1}25%,75%{opacity:0}}
 
 .hero-buttons{margin-top:50px;display:flex;justify-content:center;gap:20px;}
 
-/* ROUTING FLOW DIAGRAM */
-.flow-diagram{
-  margin-top:100px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:40px;
-  font-weight:600;
-}
-.node{
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:20px 30px;
-  border-radius:var(--radius);
-  box-shadow:0 10px 30px rgba(0,0,0,0.05);
-  transition:0.3s;
-}
-.node.active{
-  border-color:var(--accent);
-  box-shadow:0 0 20px rgba(37,99,235,0.2);
-}
-.arrow{font-size:26px;color:var(--muted);}
-
-/* SECTIONS */
 .section{padding:130px 0;}
 .section h2{font-size:38px;margin-bottom:20px;}
 .section p{color:var(--muted);max-width:750px;}
 
-.grid{
-  margin-top:70px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:35px;
-}
+.grid{margin-top:70px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:35px;}
 .card{
-  background:var(--card);
+  background:white;
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:35px;
   transition:0.3s;
 }
 .card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 25px 60px rgba(15,23,42,0.08);
+  transform:translateY(-6px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.08);
 }
 
 /* PRICING */
 .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:35px;margin-top:80px;}
 .price-card{
-  background:var(--card);
+  background:white;
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:50px;
   text-align:center;
-  transition:0.3s;
 }
-.price-card:hover{transform:translateY(-8px);box-shadow:0 25px 70px rgba(0,0,0,0.08);}
-.price{font-size:44px;margin:25px 0;font-weight:800;}
 .highlight{border:2px solid var(--accent);}
 
 /* MODAL */
 .modal-overlay{
-  position:fixed;inset:0;background:rgba(15,23,42,0.4);
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
   display:flex;align-items:center;justify-content:center;
   visibility:hidden;opacity:0;transition:0.3s;
 }
-.modal{
-  background:white;padding:45px;border-radius:20px;width:420px;
-  box-shadow:0 40px 80px rgba(0,0,0,0.15);
-}
 .modal-overlay.active{visibility:visible;opacity:1;}
-.modal input{width:100%;padding:14px;margin-top:14px;border:1px solid var(--border);border-radius:12px;}
-.modal button{margin-top:24px;width:100%;}
+.modal{
+  background:white;padding:40px;border-radius:20px;width:400px;
+}
+.modal input{
+  width:100%;padding:14px;margin-top:14px;border:1px solid var(--border);border-radius:12px;
+}
+.loading{
+  width:18px;height:18px;border:3px solid #ddd;border-top:3px solid #111;border-radius:50%;
+  animation:spin 1s linear infinite;margin:auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.success{color:green;margin-top:10px;text-align:center;}
 
 footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color:var(--muted);}
 </style>
@@ -148,9 +177,11 @@ footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color
       <img src="assets/logo.svg">
       ZYNK
     </div>
+    <div class="menu-btn" onclick="toggleSidebar()">☰</div>
     <div class="nav-links">
       <a href="#product">Product</a>
       <a href="#architecture">Architecture</a>
+      <a href="#why">Why Zynk</a>
       <a href="#pricing">Pricing</a>
       <button class="btn-outline" onclick="openModal('login')">Login</button>
       <button class="btn-primary" onclick="openModal('signup')">Get Started</button>
@@ -158,110 +189,134 @@ footer{padding:80px 0;border-top:1px solid var(--border);text-align:center;color
   </div>
 </div>
 
+<div class="sidebar" id="sidebar">
+  <div class="close-btn" onclick="toggleSidebar()">✕</div>
+  <a href="#product">Product</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#why">Why Zynk</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#" onclick="openModal('login')">Login</a>
+  <a href="#" onclick="openModal('signup')">Sign Up</a>
+</div>
+
 <section class="hero container">
   <h1>AI Infrastructure That Thinks Before It Responds</h1>
   <div class="subtitle" id="typing"></div><span class="cursor"></span>
-
   <div class="hero-buttons">
     <button class="btn-primary" onclick="openModal('signup')">Start Free</button>
-    <button class="btn-outline">View Architecture</button>
-  </div>
-
-  <div class="flow-diagram">
-    <div class="node" id="n1">User Query</div>
-    <div class="arrow">→</div>
-    <div class="node" id="n2">Analysis Engine</div>
-    <div class="arrow">→</div>
-    <div class="node" id="n3">Optimal Model</div>
-    <div class="arrow">→</div>
-    <div class="node" id="n4">Streaming Response</div>
   </div>
 </section>
 
 <section id="product" class="section container">
   <h2>Intelligent Model Orchestration</h2>
-  <p>
-    Zynk is not another AI wrapper. It is an orchestration layer that analyzes,
-    routes and optimizes every request before execution.
-  </p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Intent Detection</h3>
-      <p>Each query is analyzed for reasoning depth, code complexity and token requirements.</p>
-    </div>
-    <div class="card">
-      <h3>Plan-Aware Routing</h3>
-      <p>User tier directly influences model selection logic and resource allocation.</p>
-    </div>
-    <div class="card">
-      <h3>Context Compression</h3>
-      <p>Long conversations are summarized intelligently to preserve reasoning continuity.</p>
-    </div>
-  </div>
+  <p>Zynk analyzes, routes and optimizes every query before execution.</p>
 </section>
 
 <section id="architecture" class="section container">
   <h2>Production Architecture</h2>
-  <p>
-    Built with FastAPI streaming backend, Supabase RLS security,
-    cost enforcement systems, rate limiting layers and structured logging.
-  </p>
+  <p>Streaming FastAPI backend, Supabase RLS security, rate limiting & cost enforcement.</p>
+</section>
 
+<section id="why" class="section container">
+  <h2>Why Zynk</h2>
   <div class="grid">
     <div class="card">
-      <h3>Secure Isolation</h3>
-      <p>Row-level security ensures no user can access another’s conversation.</p>
+      <h3>Smart Cost Control</h3>
+      <p>Automatic plan-based cost enforcement.</p>
     </div>
     <div class="card">
-      <h3>Streaming Engine</h3>
-      <p>Token-level streaming delivers smooth real-time responses.</p>
+      <h3>Secure by Default</h3>
+      <p>Row level security ensures data isolation.</p>
     </div>
     <div class="card">
-      <h3>Cost Enforcement</h3>
-      <p>Daily plan caps and global platform budget protection built-in.</p>
+      <h3>Built for Builders</h3>
+      <p>Designed for developers who want control.</p>
     </div>
   </div>
 </section>
 
 <section id="pricing" class="section container">
   <h2>Pricing</h2>
-
   <div class="pricing">
-    <div class="price-card">
-      <h3>Free</h3>
-      <div class="price">$0</div>
-      <p>Basic routing access</p>
-    </div>
-    <div class="price-card highlight">
-      <h3>Pro</h3>
-      <div class="price">$19</div>
-      <p>Advanced orchestration & priority routing</p>
-    </div>
-    <div class="price-card">
-      <h3>Ultra</h3>
-      <div class="price">$49</div>
-      <p>Long context models & premium throughput</p>
-    </div>
+    <div class="price-card"><h3>Free</h3><p>$0</p></div>
+    <div class="price-card highlight"><h3>Pro</h3><p>$19</p></div>
+    <div class="price-card"><h3>Ultra</h3><p>$49</p></div>
   </div>
 </section>
 
-<footer>
-© 2026 Zynk AI — Infrastructure for serious builders.
-</footer>
+<footer>© 2026 Zynk AI</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle"></h3>
+    <input id="nameField" placeholder="Name" style="display:none;">
+    <input id="emailField" placeholder="Email">
+    <input id="passField" type="password" placeholder="Password">
+    <button class="btn-primary" id="actionBtn">Continue</button>
+    <div class="success" id="successMsg"></div>
+  </div>
+</div>
 
 <script>
-/* Typing subtitle */
-const lines=[
-  "Smart routing based on complexity.",
-  "Plan-aware model orchestration.",
-  "Cost enforcement and streaming control."
-];
+const backend="https://dev-router.onrender.com";
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+function openModal(mode){
+  const modal=document.getElementById("modal");
+  modal.classList.add("active");
+  document.getElementById("successMsg").innerText="";
+  document.getElementById("modalTitle").innerText=mode==="login"?"Login":"Create Account";
+  document.getElementById("nameField").style.display=mode==="signup"?"block":"none";
+
+  document.getElementById("actionBtn").onclick=async()=>{
+    const btn=document.getElementById("actionBtn");
+    btn.innerHTML='<div class="loading"></div>';
+
+    const email=document.getElementById("emailField").value;
+    const password=document.getElementById("passField").value;
+    const name=document.getElementById("nameField").value;
+
+    const endpoint=mode==="login"?"login":"signup";
+    const body=mode==="login"?{email,password}:{name,email,password};
+
+    const res=await fetch(`${backend}/${endpoint}`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    });
+
+    const data=await res.json();
+    btn.innerText="Continue";
+
+    if(res.ok){
+      if(mode==="login"){
+        localStorage.setItem("token",data.access_token);
+        window.location="chat.html";
+      }else{
+        document.getElementById("successMsg").innerText="Account created successfully!";
+      }
+    }else{
+      document.getElementById("successMsg").innerText=data.detail||"Error";
+    }
+  };
+}
+
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal"){
+    document.getElementById("modal").classList.remove("active");
+  }
+});
+
+/* typing animation */
+const lines=["Smart routing.","Cost enforcement.","Secure AI infra."];
 let lineIndex=0,charIndex=0;
 function type(){
   if(charIndex<lines[lineIndex].length){
-    document.getElementById("typing").innerText+=lines[lineIndex].charAt(charIndex);
-    charIndex++;
+    document.getElementById("typing").innerText+=lines[lineIndex][charIndex++];
     setTimeout(type,35);
   }else{
     setTimeout(()=>{
@@ -273,16 +328,6 @@ function type(){
   }
 }
 type();
-
-/* Routing flow animation */
-const nodes=["n1","n2","n3","n4"];
-let current=0;
-function animateFlow(){
-  nodes.forEach(id=>document.getElementById(id).classList.remove("active"));
-  document.getElementById(nodes[current]).classList.add("active");
-  current=(current+1)%nodes.length;
-}
-setInterval(animateFlow,1200);
 </script>
 
 </body>
