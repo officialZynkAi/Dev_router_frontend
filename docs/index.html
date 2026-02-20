@@ -347,10 +347,77 @@ footer{
 <section id="architecture" class="section container">
   <h2>Production Architecture</h2>
   <p>
-    FastAPI streaming backend, Supabase RLS security,
-    rate limiting, cost enforcement and dynamic routing logic.
+    Zynk is built as a structured orchestration layer — not a chatbot wrapper.
+    Every request passes through multiple control layers before reaching a model.
   </p>
-</section>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>1. API Gateway Layer</h3>
+      <p>
+        All user requests enter through a FastAPI streaming gateway.
+        Authentication, rate limiting and plan validation are enforced
+        before routing begins.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>2. Query Classification Engine</h3>
+      <p>
+        Each query is analyzed for:
+        <br><br>
+        • Code presence<br>
+        • Complexity depth<br>
+        • Context length<br>
+        • Plan tier
+        <br><br>
+        This produces a routing score.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>3. Intelligent Router</h3>
+      <p>
+        Based on classification, Zynk selects the optimal model tier.
+        Lightweight models handle simple tasks.
+        Advanced reasoning models activate only when necessary.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>4. Cost Enforcement Layer</h3>
+      <p>
+        Built-in cost guardrails ensure:
+        <br><br>
+        • Daily plan limits<br>
+        • Platform-wide budget caps<br>
+        • Safe fallback routing
+        <br><br>
+        Preventing runaway token usage.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>5. Context Compression System</h3>
+      <p>
+        Long conversations are summarized intelligently
+        to preserve reasoning continuity while reducing token load.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>6. Streaming Delivery Engine</h3>
+      <p>
+        Token-level streaming ensures real-time response flow,
+        providing low-latency UX while maintaining structured logging.
+      </p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:80px; padding:40px; border-radius:18px; border:1px solid var(--border); background:white;">
+    <h3 style="margin-bottom
 
 <section id="pricing" class="section container">
   <h2>Pricing</h2>
