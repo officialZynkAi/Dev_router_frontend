@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zynk AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+
+body{
+  background:#ffffff;
+  color:#111827;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:72px;
+  background:white;
+  border-bottom:1px solid #f0f0f0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  z-index:1000;
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-img{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+}
+
+.brand{
+  font-weight:600;
+  font-size:20px;
+}
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.menu-icon{
+  font-size:22px;
+  cursor:pointer;
+}
+
+.btn{
+  padding:8px 18px;
+  border-radius:12px;
+  border:1px solid #e5e5e5;
+  background:white;
+  cursor:pointer;
+  font-weight:500;
+  transition:0.2s;
+}
+
+.btn:hover{
+  background:#f5f5f5;
+}
+
+.btn.primary{
+  background:#111827;
+  color:white;
+  border:none;
+}
+
+/* ===== SIDEBAR ===== */
+
+.sidebar{
+  position:fixed;
+  right:-260px;
+  top:0;
+  width:260px;
+  height:100%;
+  background:white;
+  border-left:1px solid #f0f0f0;
+  padding:24px;
+  transition:0.3s;
+  z-index:1200;
+}
+
+.sidebar.open{
+  right:0;
+}
+
+.close-arrow{
+  position:absolute;
+  left:-28px;
+  top:20px;
+  background:white;
+  border:1px solid #e5e5e5;
+  padding:4px 8px;
+  border-radius:8px 0 0 8px;
+  cursor:pointer;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+  padding-top:160px;
+  text-align:center;
+  max-width:850px;
+  margin:auto;
+}
+
+.hero h1{
+  font-size:48px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  font-size:18px;
+  color:#6b7280;
+  margin-bottom:30px;
+}
+
+/* ===== MODAL ===== */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-box{
+  width:360px;
+  background:white;
+  padding:30px;
+  border-radius:20px;
+}
+
+.modal-box h3{
+  margin-bottom:20px;
+}
+
+.modal-box input{
+  width:100%;
+  padding:10px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:1px solid #e5e5e5;
+}
+
+.status-msg{
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.success{
+  color:green;
+}
+
+.error{
+  color:red;
+}
+
+.loader{
+  border:3px solid #f3f3f3;
+  border-top:3px solid #111827;
+  border-radius:50%;
+  width:18px;
+  height:18px;
+  animation:spin 1s linear infinite;
+  display:inline-block;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="nav-left">
+    <img src="assets/logo.png" class="logo-img">
+    <div class="brand">Zynk</div>
+  </div>
+
+  <div class="nav-right">
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <button class="btn" onclick="openModal('login')">Login</button>
+    <button class="btn primary" onclick="openModal('signup')">Sign Up</button>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="close-arrow" onclick="toggleSidebar()">←</div>
+  <h3>Menu</h3>
+  <div style="margin-top:20px;cursor:pointer;">Pricing</div>
+  <div style="margin-top:14px;cursor:pointer;">Chat</div>
+</div>
+
+<section class="hero">
+  <h1>Intelligent Model Routing Infrastructure</h1>
+  <p>
+    Zynk analyzes every query and routes it to the most efficient AI model —
+    balancing quality, speed, and cost automatically.
+  </p>
+</section>
+
+<!-- ===== AUTH MODAL ===== -->
+
+<div class="modal" id="authModal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+
+    <div id="statusMsg" class="status-msg"></div>
+
+    <input type="text" id="nameField" placeholder="Name">
+    <input type="email" id="emailField" placeholder="Email">
+    <input type="password" id="passwordField" placeholder="Password">
+
+    <button class="btn primary" id="authBtn" onclick="submitAuth()"></button>
+  </div>
+</div>
+
+<script>
+
+const backend="https://dev-router.onrender.com";
+let mode="login";
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+function openModal(type){
+  mode=type;
+  document.getElementById("authModal").classList.add("active");
+  document.getElementById("modalTitle").innerText=
+    type==="login"?"Login":"Create Account";
+
+  document.getElementById("authBtn").innerText=
+    type==="login"?"Login":"Create Account";
+
+  document.getElementById("nameField").style.display=
+    type==="signup"?"block":"none";
+
+  document.getElementById("statusMsg").innerText="";
+}
+
+async function submitAuth(){
+
+  const btn=document.getElementById("authBtn");
+  const status=document.getElementById("statusMsg");
+
+  btn.innerHTML='<span class="loader"></span>';
+
+  const email=document.getElementById("emailField").value;
+  const password=document.getElementById("passwordField").value;
+  const name=document.getElementById("nameField").value;
+
+  const endpoint=mode==="login"?"login":"signup";
+  const body=mode==="login"
+      ?{email,password}
+      :{name,email,password};
+
+  try{
+    const res=await fetch(`${backend}/${endpoint}`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    });
+
+    const data=await res.json();
+
+    if(mode==="signup"){
+      status.innerText="Account created successfully";
+      status.className="status-msg success";
+    }
+
+    if(mode==="login" && data.access_token){
+      localStorage.setItem("token",data.access_token);
+      status.innerText="Login successful";
+      status.className="status-msg success";
+    }
+
+  }catch(err){
+    status.innerText="Something went wrong";
+    status.className="status-msg error";
+  }
+
+  btn.innerText=mode==="login"?"Login":"Create Account";
+}
+
+</script>
+
+</body>
+</html>
