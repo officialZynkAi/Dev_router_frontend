@@ -374,25 +374,81 @@ footer{
 </section>
 
 <section id="solution" class="section container">
-  <h2>Intelligent Model Orchestration</h2>
-  <p>
-    Zynk analyzes complexity, context length and code presence,
-    then routes the request to the optimal model tier.
+
+  <h2>An Intelligent Orchestration Layer</h2>
+
+  <p style="max-width:850px;">
+    Zynk introduces a structured decision layer between your application and AI models.
+    Instead of sending every request directly to a model,
+    each query is evaluated, classified and routed based on complexity,
+    context depth and plan constraints.
   </p>
-  <div class="grid">
-    <div class="card">
-      <h3>Automatic Routing</h3>
-      <p>No manual switching between models.</p>
-    </div>
-    <div class="card">
-      <h3>Cost Guard</h3>
-      <p>Daily plan caps and platform safeguards.</p>
-    </div>
-    <div class="card">
-      <h3>Context Compression</h3>
-      <p>Maintains reasoning while reducing token usage.</p>
-    </div>
+
+  <div style="margin-top:40px; color:var(--muted); font-size:17px; max-width:820px;">
+    The goal is not to use the largest model.
+    The goal is to use the right model.
   </div>
+
+  <div class="grid" style="margin-top:70px;">
+
+    <div class="card">
+      <h3>Complexity Evaluation</h3>
+      <p>
+        Every request is analyzed for reasoning depth, code presence,
+        token length and contextual history.
+        This produces a structured execution profile before allocation begins.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Dynamic Model Routing</h3>
+      <p>
+        Based on the execution profile, Zynk selects the most appropriate model tier.
+        Lightweight queries use efficient compute.
+        High-complexity workloads activate advanced reasoning models only when necessary.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Cost-Aware Allocation</h3>
+      <p>
+        Routing decisions operate within plan-level and platform-level boundaries.
+        This ensures predictable infrastructure spend while preserving performance.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Context Preservation</h3>
+      <p>
+        Long conversations are compressed intelligently,
+        allowing sustained reasoning continuity without uncontrolled token growth.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Unified Access Layer</h3>
+      <p>
+        Zynk abstracts multi-model complexity behind a single interface.
+        No provider juggling.
+        No duplicated logic.
+        No fragmented billing.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Streaming Execution Pipeline</h3>
+      <p>
+        Responses are delivered in real time through a structured streaming system,
+        ensuring low latency and consistent user experience across workloads.
+      </p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:90px; max-width:850px; font-size:18px;">
+    Zynk transforms AI usage from direct execution into controlled orchestration.
+  </div>
+
 </section>
 
 <section id="architecture" class="section container">
