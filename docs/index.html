@@ -314,12 +314,63 @@ footer{
 </section>
 
 <section id="problem" class="section container">
-  <h2>The AI Cost Problem</h2>
-  <p>
-    Developers unknowingly burn premium tokens on simple tasks.
-    Large reasoning models are used where lightweight models would perform equally well —
-    increasing infrastructure costs dramatically.
+
+  <h2>The Structural Cost Problem in AI</h2>
+
+  <p style="max-width:850px;">
+    AI capabilities are advancing rapidly — and so is the computational cost required to run them.
+    As models grow more capable, they also grow more expensive.
+    Without structured allocation, scaling AI becomes financially unpredictable.
   </p>
+
+  <div style="margin-top:40px; color:var(--muted); font-size:17px; max-width:820px;">
+    The issue is not model quality.
+    The issue is how models are selected and deployed.
+  </div>
+
+  <div class="grid" style="margin-top:70px;">
+
+    <div class="card">
+      <h3>Over-Allocation of High-Compute Models</h3>
+      <p>
+        In most applications, every request — simple or complex — is sent to the same
+        high-capability model. Lightweight tasks consume premium compute,
+        resulting in disproportionate infrastructure spend.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Fragmented Multi-Model Strategies</h3>
+      <p>
+        Teams adopt multiple AI providers to cover different workloads.
+        This leads to duplicated routing logic, billing fragmentation and operational overhead.
+        The orchestration layer is usually missing.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>No Intermediate Decision Layer</h3>
+      <p>
+        Most systems connect directly to models without a structured evaluation phase.
+        There is no complexity scoring, no cost-awareness, and no controlled allocation —
+        only direct execution.
+      </p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:90px; max-width:850px; font-size:18px;">
+    <strong>AI itself is not expensive by default.</strong>
+    Inefficient allocation is.
+  </div>
+
+  <div style="margin-top:20px; max-width:850px; color:var(--muted);">
+    As AI adoption becomes foundational to modern products,
+    infrastructure-level orchestration becomes necessary.
+    Intelligent routing is not an optimization —
+    it is an architectural requirement.
+  </div>
+
 </section>
 
 <section id="solution" class="section container">
