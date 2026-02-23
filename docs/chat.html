@@ -235,6 +235,53 @@ textarea{
   height:36px;
   cursor:pointer;
 }
+
+/* ===== Empty State ===== */
+
+.empty-state{
+  text-align:center;
+  margin-top:80px;
+  animation:fadeIn .3s ease;
+}
+
+.empty-state h1{
+  font-size:28px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.empty-state p{
+  color:#6b7280;
+  margin-bottom:30px;
+  font-size:15px;
+}
+
+.suggestions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.suggestions button{
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  background:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:.2s ease;
+}
+
+.suggestions button:hover{
+  background:#f3f4f6;
+  transform:translateY(-1px);
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(6px);}
+  to{opacity:1;transform:translateY(0);}
+}
 </style>
 </head>
 
@@ -255,7 +302,27 @@ textarea{
 </div>
 
 <div class="chat-wrapper">
-  <div class="chat" id="chat"></div>
+  <div class="chat" id="chat">
+
+  <div class="empty-state" id="emptyState">
+    <h1>Welcome to Zynk</h1>
+    <p>Ask anything. I’ll respond clearly and simply.</p>
+
+    <div class="suggestions">
+      <button onclick="quickPrompt('Explain this Python code')">
+        Explain Python code
+      </button>
+
+      <button onclick="quickPrompt('Summarize this text')">
+        Summarize text
+      </button>
+
+      <button onclick="quickPrompt('Help me fix a bug')">
+        Fix a bug
+      </button>
+    </div>
+  </div>
+   
 </div>
 
 <div class="input-bar">
@@ -404,6 +471,20 @@ async function send(){
         }catch{}
       }
     }
+  }
+}
+
+function quickPrompt(text){
+  document.getElementById("input").value = text;
+  send();
+}
+
+function hideEmptyState(){
+  const empty = document.getElementById("emptyState");
+  if(empty){
+    empty.style.opacity = "0";
+    empty.style.transform = "translateY(-6px)";
+    setTimeout(()=>empty.remove(),200);
   }
 }
 </script>
