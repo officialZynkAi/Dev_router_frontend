@@ -11,18 +11,31 @@
 <style>
 :root{
   --bg:#ffffff;
+  --sidebar:#f8fafc;
   --text:#0f172a;
   --muted:#64748b;
   --border:#e2e8f0;
-  --sidebar:#f8fafc;
+  --primary:#111827;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
 
-.app{position:relative;height:100vh;display:flex;}
+body{
+  height:100vh;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+}
 
-/* ========== SIDEBAR (SLIDING) ========== */
+/* ========== APP LAYOUT ========== */
+
+.app{
+  position:relative;
+  height:100vh;
+  display:flex;
+}
+
+/* ========== SIDEBAR ========== */
 
 .sidebar{
   position:absolute;
@@ -35,7 +48,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
   padding:20px;
   display:flex;
   flex-direction:column;
-  transition:0.3s ease;
+  transition:0.25s ease;
   z-index:1000;
 }
 
@@ -49,7 +62,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
   margin-bottom:20px;
 }
 
-.close-btn{cursor:pointer;}
+.close-btn{ cursor:pointer; }
 
 .new-chat{
   padding:10px;
@@ -60,16 +73,44 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
   cursor:pointer;
 }
 
-.chat-list{flex:1;overflow-y:auto;}
-.logout{margin-top:auto;color:var(--muted);cursor:pointer;font-size:14px;}
+.chat-list{
+  flex:1;
+  overflow-y:auto;
+}
+
+.chat-item{
+  padding:8px;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+  margin-bottom:4px;
+}
+
+.chat-item:hover{
+  background:white;
+}
+
+.chat-item.active{
+  background:white;
+  font-weight:500;
+}
+
+.logout{
+  margin-top:auto;
+  font-size:14px;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+/* Overlay */
 
 .overlay{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.2);
+  background:rgba(0,0,0,0.25);
   opacity:0;
   visibility:hidden;
-  transition:0.3s;
+  transition:0.2s;
 }
 
 .overlay.show{
@@ -103,7 +144,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
   font-size:18px;
 }
 
-/* CHAT */
+/* CHAT AREA */
 
 .chat-wrapper{
   flex:1;
@@ -115,7 +156,7 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
 
 .chat{
   width:100%;
-  max-width:780px;
+  max-width:800px;
   display:flex;
   flex-direction:column;
   gap:24px;
@@ -123,9 +164,14 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
 
 /* Messages */
 
+.message{
+  line-height:1.7;
+  font-size:15px;
+}
+
 .user{
   align-self:flex-end;
-  background:#111827;
+  background:var(--primary);
   color:white;
   padding:12px 16px;
   border-radius:18px;
@@ -134,44 +180,6 @@ body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
 
 .ai{
   max-width:85%;
-  line-height:1.7;
-  font-size:15px;
-}
-
-/* Input */
-
-.input-bar{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:780px;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:10px 14px;
-}
-
-textarea{
-  width:100%;
-  border:none;
-  resize:none;
-  outline:none;
-  font-size:15px;
-}
-
-.send{
-  position:absolute;
-  right:12px;
-  bottom:12px;
-  background:#111827;
-  color:white;
-  border:none;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  cursor:pointer;
 }
 
 /* Code Block */
@@ -195,13 +203,49 @@ textarea{
   background:none;
   border:none;
   cursor:pointer;
-  font-size:12px;
 }
 
 .code-block pre{
   margin:0;
   padding:16px;
   overflow:auto;
+}
+
+/* INPUT */
+
+.input-bar{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:800px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:12px 16px;
+}
+
+textarea{
+  width:100%;
+  border:none;
+  resize:none;
+  outline:none;
+  font-size:15px;
+  max-height:200px;
+}
+
+.send{
+  position:absolute;
+  right:16px;
+  bottom:14px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -215,9 +259,10 @@ textarea{
     Zynk
     <span class="close-btn" onclick="toggleSidebar()">✕</span>
   </div>
-  <button class="new-chat">New Chat</button>
-  <div class="chat-list"></div>
-  <div class="logout">Logout</div>
+
+  <button class="new-chat" onclick="createChat()">New Chat</button>
+  <div class="chat-list" id="chatList"></div>
+  <div class="logout" onclick="logout()">Logout</div>
 </div>
 
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
@@ -244,40 +289,46 @@ textarea{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
 <script>
-const BACKEND_URL="YOUR_BACKEND_URL";
+const BACKEND_URL="https://dev-router.onrender.com";
 const token=localStorage.getItem("token");
 
+let currentChatId=null;
+
 const chat=document.getElementById("chat");
-const wrapper=document.getElementById("chatWrapper");
+const chatWrapper=document.getElementById("chatWrapper");
 const textarea=document.getElementById("input");
 
+/* Sidebar */
 function toggleSidebar(){
   document.getElementById("sidebar").classList.toggle("open");
   document.getElementById("overlay").classList.toggle("show");
 }
 
+/* Auto resize */
 textarea.addEventListener("input",()=>{
   textarea.style.height="auto";
   textarea.style.height=textarea.scrollHeight+"px";
 });
 
+/* Scroll */
 function scrollBottom(){
-  wrapper.scrollTop=wrapper.scrollHeight;
+  chatWrapper.scrollTop=chatWrapper.scrollHeight;
 }
 
+/* Format Code */
 function formatAI(text){
   return text.replace(/```(\w+)?\n([\s\S]*?)```/g,(m,lang,code)=>{
     const language=lang||"plaintext";
     return `
-    <div class="code-block">
-      <div class="code-header">
-        <span>${language}</span>
-        <button onclick="copyCode(this)">Copy</button>
-      </div>
-      <pre><code class="language-${language}">
+      <div class="code-block">
+        <div class="code-header">
+          <span>${language}</span>
+          <button onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-${language}">
 ${code.replace(/</g,"&lt;")}
-      </code></pre>
-    </div>
+        </code></pre>
+      </div>
     `;
   }).replace(/\n/g,"<br>");
 }
@@ -285,24 +336,24 @@ ${code.replace(/</g,"&lt;")}
 function copyCode(btn){
   const code=btn.parentElement.nextElementSibling.querySelector("code").innerText;
   navigator.clipboard.writeText(code);
-  btn.innerText="Copied";
-  setTimeout(()=>btn.innerText="Copy",1000);
 }
 
+/* Message Add */
 function addUser(text){
   const div=document.createElement("div");
-  div.className="user";
+  div.className="message user";
   div.innerText=text;
   chat.appendChild(div);
 }
 
 function addAI(){
   const div=document.createElement("div");
-  div.className="ai";
+  div.className="message ai";
   chat.appendChild(div);
   return div;
 }
 
+/* SEND */
 async function send(){
   const q=textarea.value.trim();
   if(!q) return;
@@ -323,7 +374,7 @@ async function send(){
       "Content-Type":"application/json",
       "Authorization":"Bearer "+token
     },
-    body:JSON.stringify({question:q})
+    body:JSON.stringify({question:q,chat_id:currentChatId})
   });
 
   const reader=res.body.getReader();
@@ -345,6 +396,7 @@ async function send(){
         ai.innerHTML=formatAI(full);
         document.querySelectorAll("pre code").forEach(b=>hljs.highlightElement(b));
         scrollBottom();
+        loadChats();
         return;
       }
 
@@ -359,7 +411,60 @@ async function send(){
     }
   }
 }
+
+/* Chat History */
+
+async function loadChats(){
+  const res=await fetch(`${BACKEND_URL}/chats`,{
+    headers:{Authorization:"Bearer "+token}
+  });
+  const chats=await res.json();
+  const list=document.getElementById("chatList");
+  list.innerHTML="";
+  chats.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="chat-item";
+    div.innerText=c.title;
+    div.onclick=()=>loadMessages(c.id);
+    list.appendChild(div);
+  });
+}
+
+async function loadMessages(id){
+  currentChatId=id;
+  chat.innerHTML="";
+  const res=await fetch(`${BACKEND_URL}/chats/${id}/messages`,{
+    headers:{Authorization:"Bearer "+token}
+  });
+  const msgs=await res.json();
+  msgs.forEach(m=>{
+    if(m.role==="user") addUser(m.content);
+    else{
+      const div=addAI();
+      div.innerHTML=formatAI(m.content);
+    }
+  });
+  scrollBottom();
+}
+
+async function createChat(){
+  const res=await fetch(`${BACKEND_URL}/chats`,{
+    method:"POST",
+    headers:{Authorization:"Bearer "+token}
+  });
+  const data=await res.json();
+  currentChatId=data.id;
+  chat.innerHTML="";
+  loadChats();
+}
+
+function logout(){
+  localStorage.removeItem("token");
+  window.location.href="/";
+}
+
+loadChats();
 </script>
 
 </body>
-  </html>
+</html>
