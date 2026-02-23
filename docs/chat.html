@@ -452,8 +452,8 @@ async function send(){
     buffer=parts.pop();
 
     for(let part of parts){
-      if(part.startsWith("data:")){
-        const data=part.replace("data:","").trim();
+       if(part.startsWith("data:")){
+          const data = part.slice(5).trimStart();
 
         if(data==="[DONE]"){
           ai.innerHTML=formatAI(full);
@@ -462,11 +462,11 @@ async function send(){
         }
 
         try{
-          const json=JSON.parse(data);
-          if(json.type==="token"){
-            full+=json.value;
-            queue.push(...json.value.split(/(\s+)/));
-            smoothRender(ai);
+          const json = JSON.parse(data);
+            if(json.type==="token"){
+              full += json.value;
+              queue.push(json.value);
+              smoothRender(ai);
           }
         }catch{}
       }
