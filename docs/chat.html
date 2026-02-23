@@ -453,7 +453,7 @@ async function send(){
 
     for(let part of parts){
        if(part.startsWith("data:")){
-          const data = part.slice(5).trimStart();
+          const data = part.slice(5);
 
         if(data==="[DONE]"){
           ai.innerHTML=formatAI(full);
