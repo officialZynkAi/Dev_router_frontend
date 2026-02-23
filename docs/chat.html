@@ -11,81 +11,82 @@
 <style>
 :root{
   --bg:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --sidebar:#f9fafb;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --sidebar:#f8fafc;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  height:100vh;
-  display:flex;
-  overflow:hidden;
-}
+.app{position:relative;height:100vh;display:flex;}
 
-/* ================= SIDEBAR ================= */
+/* ========== SIDEBAR (SLIDING) ========== */
 
 .sidebar{
-  width:260px;
+  position:absolute;
+  left:-280px;
+  top:0;
+  width:280px;
+  height:100%;
   background:var(--sidebar);
   border-right:1px solid var(--border);
   padding:20px;
   display:flex;
   flex-direction:column;
   transition:0.3s ease;
+  z-index:1000;
 }
 
-.sidebar.collapsed{
-  width:70px;
-}
+.sidebar.open{ left:0; }
 
 .sidebar-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px;
   font-weight:600;
+  margin-bottom:20px;
 }
 
-.collapse-btn{
-  cursor:pointer;
-  font-size:14px;
-}
+.close-btn{cursor:pointer;}
 
 .new-chat{
   padding:10px;
   border:1px solid var(--border);
-  border-radius:8px;
   background:white;
-  cursor:pointer;
+  border-radius:8px;
   margin-bottom:20px;
-  font-size:14px;
-}
-
-.chat-list{
-  flex:1;
-  overflow-y:auto;
-}
-
-.logout{
-  font-size:14px;
-  color:var(--muted);
   cursor:pointer;
-  margin-top:auto;
 }
 
-/* ================= MAIN ================= */
+.chat-list{flex:1;overflow-y:auto;}
+.logout{margin-top:auto;color:var(--muted);cursor:pointer;font-size:14px;}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.2);
+  opacity:0;
+  visibility:hidden;
+  transition:0.3s;
+}
+
+.overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+/* ========== MAIN ========== */
 
 .main{
   flex:1;
   display:flex;
   flex-direction:column;
-  height:100vh;
+  height:100%;
 }
+
+/* TOPBAR */
 
 .topbar{
   height:60px;
@@ -94,36 +95,33 @@ body{
   align-items:center;
   padding:0 20px;
   font-weight:600;
+  gap:10px;
 }
 
-/* CHAT AREA */
+.menu-btn{
+  cursor:pointer;
+  font-size:18px;
+}
+
+/* CHAT */
 
 .chat-wrapper{
   flex:1;
   overflow-y:auto;
-  padding:40px 16px 140px;
+  padding:40px 20px 140px;
   display:flex;
   justify-content:center;
 }
 
 .chat{
   width:100%;
-  max-width:760px;
+  max-width:780px;
   display:flex;
   flex-direction:column;
   gap:24px;
 }
 
-/* MESSAGE */
-
-.message{
-  animation:fadeUp .2s ease forwards;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(6px);}
-  to{opacity:1;transform:translateY(0);}
-}
+/* Messages */
 
 .user{
   align-self:flex-end;
@@ -132,16 +130,15 @@ body{
   padding:12px 16px;
   border-radius:18px;
   max-width:70%;
-  font-size:14px;
 }
 
 .ai{
   max-width:85%;
-  font-size:15px;
   line-height:1.7;
+  font-size:15px;
 }
 
-/* INPUT */
+/* Input */
 
 .input-bar{
   position:fixed;
@@ -149,65 +146,35 @@ body{
   left:50%;
   transform:translateX(-50%);
   width:100%;
-  max-width:760px;
+  max-width:780px;
   background:white;
   border:1px solid var(--border);
   border-radius:24px;
-  padding:8px 12px;
-}
-
-.input-row{
-  display:flex;
-  gap:8px;
+  padding:10px 14px;
 }
 
 textarea{
-  flex:1;
+  width:100%;
   border:none;
   resize:none;
   outline:none;
   font-size:15px;
-  max-height:200px;
 }
 
 .send{
-  border:none;
+  position:absolute;
+  right:12px;
+  bottom:12px;
   background:#111827;
   color:white;
+  border:none;
+  width:36px;
+  height:36px;
   border-radius:50%;
-  width:38px;
-  height:38px;
   cursor:pointer;
 }
 
-/* EMPTY STATE */
-
-.empty-state{
-  text-align:center;
-  margin-top:80px;
-}
-
-.empty-state h1{
-  font-size:26px;
-  margin-bottom:10px;
-}
-
-.empty-state p{
-  color:var(--muted);
-  margin-bottom:20px;
-}
-
-.suggestions button{
-  padding:8px 14px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:white;
-  cursor:pointer;
-  margin:4px;
-  font-size:14px;
-}
-
-/* CODE BLOCK */
+/* Code Block */
 
 .code-block{
   margin-top:16px;
@@ -220,8 +187,8 @@ textarea{
   display:flex;
   justify-content:space-between;
   padding:8px 12px;
+  background:#f1f5f9;
   font-size:12px;
-  background:#f3f4f6;
 }
 
 .code-header button{
@@ -241,85 +208,76 @@ textarea{
 
 <body>
 
+<div class="app">
+
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     Zynk
-    <span class="collapse-btn" onclick="toggleSidebar()">⇤</span>
+    <span class="close-btn" onclick="toggleSidebar()">✕</span>
   </div>
   <button class="new-chat">New Chat</button>
   <div class="chat-list"></div>
   <div class="logout">Logout</div>
 </div>
 
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
 <div class="main">
 
 <div class="topbar">
+  <span class="menu-btn" onclick="toggleSidebar()">☰</span>
   Zynk AI
 </div>
 
 <div class="chat-wrapper" id="chatWrapper">
-  <div class="chat" id="chat">
-
-    <div class="empty-state" id="emptyState">
-      <h1>Welcome to Zynk</h1>
-      <p>Ask anything. I’ll respond clearly and simply.</p>
-      <div class="suggestions">
-        <button onclick="quickPrompt('Explain this Python code')">Explain Python code</button>
-        <button onclick="quickPrompt('Summarize this text')">Summarize text</button>
-        <button onclick="quickPrompt('Help me fix a bug')">Fix a bug</button>
-      </div>
-    </div>
-
-  </div>
+  <div class="chat" id="chat"></div>
 </div>
 
 <div class="input-bar">
-  <div class="input-row">
-    <textarea id="input" rows="1" placeholder="Message Zynk..."></textarea>
-    <button class="send" onclick="send()">➤</button>
-  </div>
+  <textarea id="input" rows="1" placeholder="Message Zynk..."></textarea>
+  <button class="send" onclick="send()">➤</button>
 </div>
 
+</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
 <script>
-const BACKEND_URL="https://dev-router.onrender.com";
+const BACKEND_URL="YOUR_BACKEND_URL";
 const token=localStorage.getItem("token");
 
 const chat=document.getElementById("chat");
-const chatWrapper=document.getElementById("chatWrapper");
+const wrapper=document.getElementById("chatWrapper");
 const textarea=document.getElementById("input");
-const sidebar=document.getElementById("sidebar");
 
 function toggleSidebar(){
-  sidebar.classList.toggle("collapsed");
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
 }
 
-/* Auto resize */
 textarea.addEventListener("input",()=>{
   textarea.style.height="auto";
   textarea.style.height=textarea.scrollHeight+"px";
 });
 
 function scrollBottom(){
-  chatWrapper.scrollTop=chatWrapper.scrollHeight;
+  wrapper.scrollTop=wrapper.scrollHeight;
 }
 
 function formatAI(text){
-  return text.replace(/```(\w+)?\n([\s\S]*?)```/g,(match,lang,code)=>{
+  return text.replace(/```(\w+)?\n([\s\S]*?)```/g,(m,lang,code)=>{
     const language=lang||"plaintext";
     return `
-      <div class="code-block">
-        <div class="code-header">
-          <span>${language}</span>
-          <button onclick="copyCode(this)">Copy</button>
-        </div>
-        <pre><code class="language-${language}">
-${code.replace(/</g,"&lt;")}
-        </code></pre>
+    <div class="code-block">
+      <div class="code-header">
+        <span>${language}</span>
+        <button onclick="copyCode(this)">Copy</button>
       </div>
+      <pre><code class="language-${language}">
+${code.replace(/</g,"&lt;")}
+      </code></pre>
+    </div>
     `;
   }).replace(/\n/g,"<br>");
 }
@@ -333,28 +291,22 @@ function copyCode(btn){
 
 function addUser(text){
   const div=document.createElement("div");
-  div.className="user message";
+  div.className="user";
   div.innerText=text;
   chat.appendChild(div);
 }
 
 function addAI(){
   const div=document.createElement("div");
-  div.className="ai message";
+  div.className="ai";
   chat.appendChild(div);
   return div;
-}
-
-function hideEmpty(){
-  const e=document.getElementById("emptyState");
-  if(e) e.remove();
 }
 
 async function send(){
   const q=textarea.value.trim();
   if(!q) return;
 
-  hideEmpty();
   addUser(q);
   textarea.value="";
   textarea.style.height="auto";
@@ -407,12 +359,7 @@ async function send(){
     }
   }
 }
-
-function quickPrompt(text){
-  textarea.value=text;
-  send();
-}
 </script>
 
 </body>
-</html>
+  </html>
