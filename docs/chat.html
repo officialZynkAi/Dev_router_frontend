@@ -282,6 +282,61 @@ textarea{
   from{opacity:0;transform:translateY(6px);}
   to{opacity:1;transform:translateY(0);}
 }
+
+
+/* ===== ChatGPT Style Code Block ===== */
+
+.code-block{
+  margin-top:16px;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+  background:#0f172a;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+}
+
+.code-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 14px;
+  background:#111827;
+  color:#9ca3af;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:0.5px;
+}
+
+.code-header span{
+  text-transform:uppercase;
+}
+
+.code-header button{
+  background:#1f2937;
+  border:1px solid #374151;
+  color:#d1d5db;
+  padding:4px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  transition:0.2s ease;
+}
+
+.code-header button:hover{
+  background:#374151;
+}
+
+.code-block pre{
+  margin:0;
+  padding:18px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.code-block code{
+  font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+}
 </style>
 </head>
 
@@ -365,25 +420,40 @@ function detectLanguage(code){
   return "plaintext";
 }
 
+function autoDetectLanguage(code){
+  if(code.includes("def ")) return "python";
+  if(code.includes("import ")) return "python";
+  if(code.includes("console.log")) return "javascript";
+  if(code.includes("function")) return "javascript";
+  if(code.includes("<html")) return "html";
+  return "plaintext";
+}
+
 function formatAI(text){
-  return text.replace(/```([\s\S]*?)```/g,(m,code)=>{
-    const lang=detectLanguage(code);
+
+  return text.replace(/```(\w+)?\n([\s\S]*?)```/g,(match,lang,code)=>{
+
+    const language = lang || autoDetectLanguage(code);
+
     return `
-    <div class="code-block">
-      <div class="code-header">
-        <span>${lang}</span>
-        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <div class="code-block">
+        <div class="code-header">
+          <span>${language}</span>
+          <button onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-${language}">
+${code.replace(/</g,"&lt;")}
+        </code></pre>
       </div>
-      <pre><code class="language-${lang}">${code.replace(/</g,"&lt;")}</code></pre>
-    </div>`;
+    `;
   }).replace(/\n/g,"<br>");
 }
 
 function copyCode(btn){
-  const code=btn.closest(".code-block").querySelector("code").innerText;
+  const code = btn.parentElement.nextElementSibling.querySelector("code").innerText;
   navigator.clipboard.writeText(code);
   btn.innerText="Copied";
-  setTimeout(()=>btn.innerText="Copy",1200);
+  setTimeout(()=>btn.innerText="Copy",1000);
 }
 
 /* Streaming */
